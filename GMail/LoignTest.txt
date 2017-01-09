@@ -1,0 +1,60 @@
+*** Settings ***
+Library           Selenium2Library
+
+*** Variables ***
+${ValidUsername}    mspeers@gmail.com
+${InvalidPassword}    Testing1
+${ValidPassword}    carterCara2014
+${Browser}        Firefox
+${SiteUrl}        https://gmail.com
+${Delay}          20
+${ErrorMessageLoignInvalidPassword}    Wrong password
+
+*** Test Cases ***
+LoginValidCredsTest
+    Open Browser to the Login Page
+    Login Enter Email Address    ${ValidUsername}
+    Login Next Button
+    Login Enter Password    ${ValidPassword}
+    Click Login
+    Wait Until Page Contains    Inbox
+    [Teardown]    Close Browser
+
+LoginInvalidPasswordTest
+    Open Browser to the Login Page
+    Login Enter Email Address    ${ValidUsername}
+    Login Next Button
+    Login Enter Password    ${InvalidPassword}
+    Click Login
+    Check Error    ${ErrorMessageLoignInvalidPassword}
+    [Teardown]    Close Browser
+
+*** Keywords ***
+Open Browser to the Login Page
+    open browser    ${SiteUrl}    ${Browser}
+    Maximize Browser Window
+
+Login Enter Email Address
+    [Arguments]    ${Username}
+    Input Text    Email    ${Username}
+
+Login Next Button
+    click button    next
+    Wait Until Page Contains Element    id=Passwd    timeout=10
+
+Login Enter Password
+    [Arguments]    ${Password}
+    Input Text    Passwd    ${Password}
+
+Click Login
+    Wait Until Page Contains Element    id=signIn    timeout=10
+    click button    id=signIn
+    Sleep    5s
+
+Check Error
+    [Arguments]    ${Message}
+    Sleep    5s
+    Element Should Contain    id=errormsg_0_Passwd    ${Message}
+
+Assert Dashboard Title
+    Title Should be    ${DashboardTitle}
