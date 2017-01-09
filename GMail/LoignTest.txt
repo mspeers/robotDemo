@@ -2,9 +2,9 @@
 Library           Selenium2Library
 
 *** Variables ***
-${ValidUsername}    mspeers@gmail.com
+${ValidUsername}    mspeers2017@gmail.com
 ${InvalidPassword}    Testing1
-${ValidPassword}    carterCara2014
+${ValidPassword}    dem0dem0
 ${Browser}        Firefox
 ${SiteUrl}        https://gmail.com
 ${Delay}          20
